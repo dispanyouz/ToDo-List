@@ -2,8 +2,10 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import s from "./TodoCreator.module.scss";
+import { useSnackbar } from 'notistack';
 
 function TodoCreator({ addTodo }) {
+  const { enqueueSnackbar } = useSnackbar();
   const [title, setTitle] = useState("");
   const [todo, setTodo] = useState("");
 
@@ -18,11 +20,22 @@ function TodoCreator({ addTodo }) {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (!title) {
+      enqueueSnackbar("Title is empty", { variant: "error" });
+      return;
+    }
+
+    if (!todo) {
+      enqueueSnackbar("Note is empty", { variant: "error" });
+      return;
+    }
+
     addTodo({
       title,
       todo,
       date: new Date().toLocaleDateString()
     });
+    enqueueSnackbar("Todo has been added", { variant: "success" });
 
     setTitle("");
     setTodo("");

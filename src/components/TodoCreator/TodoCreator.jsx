@@ -21,6 +21,7 @@ function TodoCreator({ addTodo }) {
     addTodo({
       title,
       todo,
+      date: new Date().toLocaleDateString()
     });
 
     setTitle("");

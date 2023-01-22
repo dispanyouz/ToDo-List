@@ -5,10 +5,12 @@ import Todo from "../Todo";
 import s from "./WorkSpace.module.scss";
 
 function WorkSpace() {
-  const [todos, setTodos] = useState([]);
+  const localData = JSON.parse(localStorage.getItem("Todos") || "[]");
+  const [todos, setTodos] = useState(localData);
 
   const addTodo = (todo) => {
     setTodos((prev) => {
+      localStorage.setItem("Todos", JSON.stringify([...prev, todo]));
       return [...prev, todo];
     });
   };
